@@ -27,7 +27,7 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
-    model_path = "best_model.pth"
+    model_path = get_path("model_path")
     model.load_state_dict(torch.load(model_path, map_location=device, weights_only=False))
     model.eval()
 

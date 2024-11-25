@@ -34,9 +34,9 @@ git clone https://github.com/jordan-bird/CIFAKE-Real-and-AI-Generated-Synthetic-
 
 [Download](https://drive.google.com/file/d/1y7iRO4dc7VhysOMyVt4hv-9A7obbwVCp/view?usp=sharing) the best pre-trained model to use it in testing
 
-### Step 5: Modify the datasets' paths
+### Step 5: Modify the paths
 
-Modify train_dir and test_dir in config.py to point to your specific dataset paths
+Modify train_dir, test_dir, and model_path in config.py to point to your specific dataset and pre-trained_model paths
 
 ### Step 6: Try the model
 

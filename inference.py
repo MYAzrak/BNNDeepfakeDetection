@@ -66,7 +66,7 @@ def plot_predictions(model, image_paths, transform, device):
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model_path = "best_model.pth"
+    model_path = get_path("model_path")
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
     model.load_state_dict(
         torch.load(model_path, map_location=device, weights_only=False)
