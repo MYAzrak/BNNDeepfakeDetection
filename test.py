@@ -43,7 +43,7 @@ def main():
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # Taking a small subset for a faster process
-    take_small_sample = False
+    take_small_sample = True
     if take_small_sample:
         num_samples = 10
         random_indices = np.random.choice(len(test_dataset), num_samples, replace=False)
