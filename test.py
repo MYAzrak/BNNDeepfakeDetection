@@ -9,7 +9,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, confusion_m
 import seaborn as sns  
 
 from BNext_model import BNext
-
+from config import get_path
 
 def plot_confusion_matrix(cm, classes):
     plt.figure(figsize=(8, 6))
@@ -40,7 +40,7 @@ def main():
     )
 
     # Load test dataset
-    test_dir = r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\test"
+    test_dir = get_path('test_dir') 
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # Taking a small subset for a faster process

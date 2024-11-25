@@ -6,6 +6,7 @@ from torchvision import transforms, datasets
 from PIL import Image
 
 from BNext_model import BNext
+from config import get_path
 
 
 def preprocess_image(image_path, transform):
@@ -22,9 +23,7 @@ def load_model(model_path, device):
 
 def plot_predictions(model, image_paths, transform, device):
     # Load dataset to get class mapping
-    dataset = datasets.ImageFolder(
-        root=r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\test"
-    )
+    dataset = datasets.ImageFolder(root=get_path("test_dir"))
     idx_to_class = {v: k for k, v in dataset.class_to_idx.items()}
     classes = [idx_to_class[0], idx_to_class[1]]
 
@@ -71,7 +70,9 @@ def main():
     # Model loading
     model_path = "best_model.pth"
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
-    model.load_state_dict(torch.load(model_path, map_location=device, weights_only=False))
+    model.load_state_dict(
+        torch.load(model_path, map_location=device, weights_only=False)
+    )
     model.eval()
 
     # Define preprocessing transforms
@@ -83,7 +84,7 @@ def main():
     )
 
     # Test directory
-    test_dir = r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\test"
+    test_dir = get_path("test_dir")
 
     # Image paths
     image_paths = [

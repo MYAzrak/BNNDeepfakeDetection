@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import precision_score, recall_score, f1_score
 
 from BNext_model import BNext
-
+from config import get_path
 
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -32,8 +32,8 @@ def main():
         ]
     )
 
-    train_dir = r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\train"
-    test_dir = r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\test"
+    train_dir = get_path('train_dir') 
+    test_dir = get_path('test_dir') 
 
     train_dataset = datasets.ImageFolder(root=train_dir, transform=transform)
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
