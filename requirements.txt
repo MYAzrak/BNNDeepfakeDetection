@@ -1,0 +1,13 @@
+opencv-python-headless
+numpy
+einops
+scikit-image
+torch
+torchmetrics
+timm
+lightning
+fvcore
+torchinfo
+torchvision
+matplotlib
+scikit-learn
