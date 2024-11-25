@@ -6,10 +6,11 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
-import seaborn as sns  
+import seaborn as sns
 
 from BNext_model import BNext
 from config import get_path
+
 
 def plot_confusion_matrix(cm, classes):
     plt.figure(figsize=(8, 6))
@@ -25,7 +26,6 @@ def plot_confusion_matrix(cm, classes):
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # Initialize and load the model
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
     model_path = "best_model.pth"
     model.load_state_dict(torch.load(model_path, weights_only=False))
@@ -39,22 +39,25 @@ def main():
         ]
     )
 
-    # Load test dataset
-    test_dir = get_path('test_dir') 
+    test_dir = get_path("test_dir")
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # Taking a small subset for a faster process
-    num_samples = 10
-    random_indices = np.random.choice(len(test_dataset), num_samples, replace=False)
-    test_subset = Subset(test_dataset, random_indices)
+    take_small_sample = True
+    if take_small_sample:
+        num_samples = 10
+        random_indices = np.random.choice(len(test_dataset), num_samples, replace=False)
+        test_subset = Subset(test_dataset, random_indices)
 
-    test_loader = DataLoader(test_subset, batch_size=512, shuffle=False, num_workers=4)
+    test_loader = DataLoader(
+        test_subset if take_small_sample else test_dataset,
+        batch_size=32,
+        shuffle=False,
+        num_workers=4,
+    )
 
-    # Initialize variables to track correct predictions and total number of samples
     correct = 0
     total = 0
-
-    # Lists to store true labels and predictions
     all_labels = []
     all_preds = []
 
@@ -77,13 +80,11 @@ def main():
     recall = recall_score(all_labels, all_preds, average="binary")
     f1 = f1_score(all_labels, all_preds, average="binary")
 
-    # Print results
     print(f"Test Accuracy: {accuracy:.2f}%")
     print(f"Precision: {precision:.2f}")
     print(f"Recall: {recall:.2f}")
     print(f"F1-Score: {f1:.2f}")
 
-    # Calculate and plot confusion matrix
     cm = confusion_matrix(all_labels, all_preds)
     class_names = test_dataset.classes  # Get class names from the dataset
     plot_confusion_matrix(cm, classes=class_names)

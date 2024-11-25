@@ -12,6 +12,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score
 from BNext_model import BNext
 from config import get_path
 
+
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
@@ -32,22 +33,36 @@ def main():
         ]
     )
 
-    train_dir = get_path('train_dir') 
-    test_dir = get_path('test_dir') 
+    train_dir = get_path("train_dir")
+    test_dir = get_path("test_dir")
 
     train_dataset = datasets.ImageFolder(root=train_dir, transform=transform)
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # Taking a small subset for a faster process
-    num_samples = 10
-    random_indices = np.random.choice(len(train_dataset), num_samples, replace=False)
-    train_subset = Subset(train_dataset, random_indices)
+    take_small_sample = True
+    if take_small_sample:
+        num_samples = 10
+        random_indices = np.random.choice(
+            len(train_dataset), num_samples, replace=False
+        )
+        train_subset = Subset(train_dataset, random_indices)
 
-    random_indices = np.random.choice(len(test_dataset), num_samples, replace=False)
-    test_subset = Subset(test_dataset, random_indices)
+        random_indices = np.random.choice(len(test_dataset), num_samples, replace=False)
+        test_subset = Subset(test_dataset, random_indices)
 
-    train_loader = DataLoader(train_subset, batch_size=32, shuffle=True, num_workers=4)
-    test_loader = DataLoader(test_subset, batch_size=32, shuffle=False, num_workers=4)
+    train_loader = DataLoader(
+        train_subset if take_small_sample else train_dataset,
+        batch_size=32,
+        shuffle=True,
+        num_workers=4,
+    )
+    test_loader = DataLoader(
+        test_subset if take_small_sample else test_dataset,
+        batch_size=32,
+        shuffle=False,
+        num_workers=4,
+    )
 
     num_epochs = 1
 

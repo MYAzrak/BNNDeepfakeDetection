@@ -27,7 +27,6 @@ def plot_predictions(model, image_paths, transform, device):
     idx_to_class = {v: k for k, v in dataset.class_to_idx.items()}
     classes = [idx_to_class[0], idx_to_class[1]]
 
-    # Create a figure with subplots
     n_images = len(image_paths)
     fig, axs = plt.subplots(1, n_images, figsize=(5 * n_images, 5))
     fig.suptitle("Image Predictions", fontsize=16)
@@ -67,7 +66,6 @@ def plot_predictions(model, image_paths, transform, device):
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # Model loading
     model_path = "best_model.pth"
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
     model.load_state_dict(
@@ -75,7 +73,6 @@ def main():
     )
     model.eval()
 
-    # Define preprocessing transforms
     transform = transforms.Compose(
         [
             transforms.ToTensor(),
@@ -83,10 +80,8 @@ def main():
         ]
     )
 
-    # Test directory
     test_dir = get_path("test_dir")
 
-    # Image paths
     image_paths = [
         os.path.join(test_dir, "REAL", r"0000 (2).jpg"),
         os.path.join(test_dir, "REAL", r"0000 (3).jpg"),
@@ -96,7 +91,6 @@ def main():
         os.path.join(test_dir, "FAKE", r"0 (4).jpg"),
     ]
 
-    # Plot predictions
     plot_predictions(model, image_paths, transform, device)
 
 
