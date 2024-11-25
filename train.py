@@ -40,7 +40,7 @@ def main():
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # Taking a small subset for a faster process
-    take_small_sample = True
+    take_small_sample = False
     if take_small_sample:
         num_samples = 10
         random_indices = np.random.choice(
@@ -64,7 +64,7 @@ def main():
         num_workers=4,
     )
 
-    num_epochs = 1
+    num_epochs = 10
 
     train_history = []
     val_history = []

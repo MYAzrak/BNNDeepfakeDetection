@@ -38,6 +38,6 @@ git clone https://github.com/jordan-bird/CIFAKE-Real-and-AI-Generated-Synthetic-
 
 Modify train_dir and test_dir in config.py to point to your specific dataset paths
 
-### Step 5: Try the model
+### Step 6: Try the model
 
 Run train.py, test.py, or inference.py

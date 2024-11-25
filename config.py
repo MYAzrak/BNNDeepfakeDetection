@@ -1,6 +1,6 @@
 PROJECT_PATHS = {
-    "test_dir": r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\test",
-    "train_dir": r"C:\Users\monsi\Downloads\temp\CIFAKE-Real-and-AI-Generated-Synthetic-Images\DATASET\train",
+    "test_dir": r"D:\MYA\AUS\Bachelor\Senior 2\COE 49413\Project\OursRepo\Dataset\test",
+    "train_dir": r"D:\MYA\AUS\Bachelor\Senior 2\COE 49413\Project\OursRepo\Dataset\train",
 }
 
 

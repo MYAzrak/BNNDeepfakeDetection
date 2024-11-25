@@ -28,7 +28,7 @@ def main():
 
     model = nn.DataParallel(BNext(num_classes=2)).to(device)
     model_path = "best_model.pth"
-    model.load_state_dict(torch.load(model_path, weights_only=False))
+    model.load_state_dict(torch.load(model_path, map_location=device, weights_only=False))
     model.eval()
 
     # Preprocessing (Normalization)
@@ -43,7 +43,7 @@ def main():
     test_dataset = datasets.ImageFolder(root=test_dir, transform=transform)
 
     # Taking a small subset for a faster process
-    take_small_sample = True
+    take_small_sample = False
     if take_small_sample:
         num_samples = 10
         random_indices = np.random.choice(len(test_dataset), num_samples, replace=False)
